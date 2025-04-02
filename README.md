@@ -142,42 +142,126 @@ Projekt obejmuje implementację oraz analizę metod numerycznych do rozwiązywan
       - Funkcja: euler_method(f, x0, y0, h, x_end)
       - Opis:
             - Implementacja podstawowej metody Eulera do rozwiązywania równań różniczkowych.
-            - Schemat iteracyjny:
-
-𝑦
-𝑛
-+
-1
-=
-𝑦
-𝑛
-+
-ℎ
-⋅
-𝑓
-(
-𝑥
-𝑛
-,
-𝑦
-𝑛
-)
-y 
-n+1
-​
- =y 
-n
-​
- +h⋅f(x 
-n
-​
- ,y 
-n
-​
- )
             - Zwraca wartość y(1) dla kroku h = 0.1.
-
       - Zastosowanie: Metoda prosta, ale mało dokładna dla dużych wartości h.
+
+### 2. Implementacja metody Taylora drugiego rzędu
+      - Funkcja: taylor_method(f, df_dx, x0, y0, h, x_end)
+      - Opis:
+            - Stosuje rozwinięcie Taylora drugiego rzędu
+            - Używa zarówno pochodnej pierwszego, jak i drugiego rzędu.
+            - Dokładniejsza niż metoda Eulera.
+      - Zastosowanie: Poprawia dokładność, ale wymaga obliczania pochodnych.
+
+### 3. Porównanie dokładności metod Eulera i Taylora
+      - Funkcja: compare_methods(f, df_dx, x0, y0, h_values, x_end, exact_solution)
+      - Opis:
+            - Porównuje wartości uzyskane metodą Eulera i Taylora drugiego rzędu dla różnych kroków całkowania
+            - Tworzy tabelę wyników i wykres porównawczy względem rozwiązania analitycznego.
+      - Zastosowanie: Analiza wpływu kroku h na dokładność metody.
+
+### 4. Iteracyjne rozwiązanie na całym przedziale
+      - Funkcja: solve_iteratively(f, df_dx, x0, y0, h, x_end, method='taylor')
+      - Opis:
+            - Iteracyjnie oblicza wartości funkcji dla x ∈ [0, 1].
+            - Możliwość wyboru metody Eulera lub Taylora.
+            - Wyniki zapisywane w tabeli i wykresie.
+      - Zastosowanie: Praktyczne zastosowanie metod dla całego przedziału.
+
+### 5. Wpływ kroku całkowania na dokładność
+      - Funkcja: analyze_step_size(f, df_dx, x0, y0, h_values, x_end, exact_solution)
+      - Opis:
+            - Testowanie różnych wartości h
+            - Analiza błędu globalnego.
+            - Wnioski dotyczące wpływu kroku h na dokładność rozwiązania.
+      - Zastosowanie: Dobór optymalnego kroku całkowania.
+
+### 6. Implementacja ogólnej metody Taylora
+      - Funkcja: taylor_method_general(f, derivatives, x0, y0, h, x_end, order_n)
+      - Opis:
+            - Rozbudowana wersja metody Taylora do dowolnego rzędu n.
+            - Korzysta z iteracyjnego obliczania kolejnych pochodnych
+            - Możliwość wyboru rzędów 1–4.
+      - Zastosowanie: Bardzo dokładna metoda dla równań różniczkowych.
+
+
+
+# Laboratorium 5
+## Opis projektu
+Projekt obejmuje implementację i analizę metod numerycznych Rungego-Kutty drugiego (RK2 - Heuna) i czwartego rzędu (RK4). Celem jest porównanie tych metod z metodą Eulera oraz analiza błędów obliczeniowych.
+
+## Funkcjonalności
+### 1. Implementacja metody Heuna (RK2)
+      - Funkcja: rk2_heun(f, x0, y0, h, x_end)
+      - Opis:
+            - Zaimplementowana metoda RK2 (Heuna) do rozwiązywania równań różniczkowych.
+            - Wykorzystuje dwie oceny wartości pochodnej w danym kroku.
+            - Jest dokładniejsza od metody Eulera.
+      - Zastosowanie: Szybsza zbieżność niż metoda Eulera, ale nieco bardziej skomplikowana obliczeniowo.
+
+### 2. Implementacja metody RK4
+      - Funkcja: rk4(f, x0, y0, h, x_end)
+      - Opis:
+            - Implementacja metody RK4, jednej z najdokładniejszych metod do rozwiązywania równań różniczkowych.
+            - Wykorzystuje cztery punkty oceny pochodnej, co poprawia dokładność obliczeń.
+      - Zastosowanie: Bardzo dokładna metoda, często stosowana w obliczeniach numerycznych.
+
+### 3. Porównanie metod Eulera, RK2 i RK4
+      - Funkcja: compare_methods(f, x0, y0, h, x_end, exact_solution)
+      - Opis:
+            - Porównuje metody Eulera, RK2 (Heuna) i RK4 dla określonego równania różniczkowego.
+            - Oblicza wartości przybliżone i zestawia je z rozwiązaniem analitycznym.
+            - Tworzy tabelę wyników oraz wykres porównawczy.
+      - Zastosowanie: Analiza skuteczności różnych metod numerycznych.
+
+### 4. Analiza błędów metody Heuna (RK2)
+      - Funkcja: analyze_errors_rk2(f, exact_solution, x0, y0, h, x_end)
+      - Opis:
+            - Oblicza błędy lokalne i globalne metody Heuna (RK2).
+            - Porównuje wartości numeryczne z dokładnym rozwiązaniem.
+            - Tworzy tabelę wartości dokładnych, przybliżonych oraz błędów.
+      - Zastosowanie: Sprawdzenie dokładności metody Heuna i analiza jej potencjalnych niedokładności.
+
+
+
+# Laboratorium 6
+## Opis projektu
+Projekt obejmuje implementację i analizę metod Adamsa-Bashfortha (AB2) oraz predyktor-korektor (AB2-AM2). Celem jest porównanie ich z metodą RK4 i ocena dokładności numerycznych rozwiązań.
+
+## Funkcjonalność
+### 1.  Implementacja metody Adamsa-Bashfortha (rzędu 2 - AB2)
+      - Funkcja: adams_bashforth_2(f, x0, y0, h, n)
+      - Opis:
+            - Implementacja dwukrokowej metody AB2, wykorzystującej dwie poprzednie wartości do przewidywania nowego punktu.
+            - Pierwszy krok obliczany metodą RK4 w celu uzyskania drugiego punktu startowego.
+            - Metoda efektywna, ale wymaga wcześniejszej znajomości wartości w dwóch punktach.
+      - Zastosowanie: Szybsza niż RK4, ale mniej dokładna; dobra do zastosowań, gdzie wymagane są metody wielokrokowe.
+
+### 2. Implementacja metody Predyktor-Korektor (AB2-AM2)
+      - Funkcja: predictor_corrector(f, x0, y0, h, n)
+      - Opis:
+            - Predyktor: metoda Adamsa-Bashfortha (AB2) do wstępnego oszacowania wartości w kolejnym kroku.
+            - Korektor: metoda Adamsa-Moultona (AM2) poprawiająca wartość predykcji, uwzględniając informację z następnego kroku.
+            - Pierwszy krok wyznaczany metodą RK4.
+      - Zastosowanie:
+            - Lepsza dokładność niż czysta metoda AB2.
+            - Stosowana w problemach wymagających iteracyjnej korekcji wyników.
+
+### 3. Porównanie z metodą RK4
+      - Funkcja: compare_methods(f, x0, y0, h, x_end, exact_solution)
+      - Opis:
+            - Porównuje AB2, predyktor-korektor oraz RK4 dla wybranego równania różniczkowego.
+            - Tworzy tabelę błędów dla każdego punktu siatki.
+            - Generuje wykres rozwiązań przybliżonych w zestawieniu z rozwiązaniem analitycznym.
+      - Zastosowanie: Sprawdzenie skuteczności metod AB2 i predyktor-korektor względem RK4.
+
+
+
+
+
+
+
+
 
 
 
